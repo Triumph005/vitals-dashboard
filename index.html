@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitalsNet IoT Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 flex h-screen font-sans overflow-hidden">
+
+    <aside id="sidebar" class="bg-[#111827] text-gray-300 flex flex-col h-full overflow-x-hidden overflow-y-auto shrink-0 transition-all duration-300 z-50 absolute md:relative w-0 md:w-64">
+        <div class="flex items-center justify-between p-6 w-64">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-500 text-white p-2 rounded-md"><i class="fa-solid fa-plus"></i></div>
+                <div>
+                    <h1 class="text-white font-bold text-lg leading-tight">VitalsNet</h1>
+                    <p class="text-xs text-gray-400">2G IoT Monitor</p>
+                </div>
+            </div>
+            <button id="closeSidebarBtn" class="md:hidden text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="px-4 mb-6 w-64">
+            <p class="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wider">Navigation</p>
+            <nav class="space-y-1">
+                <a href="#" class="flex items-center gap-3 bg-[#1f2937] text-white px-3 py-2 rounded-md border-l-2 border-blue-500 transition-colors"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="#" class="flex items-center justify-between px-3 py-2 hover:bg-[#1f2937] rounded-md transition-colors">
+                    <div class="flex items-center gap-3"><i class="fa-regular fa-bell"></i> Alerts</div>
+                    <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 hover:bg-[#1f2937] rounded-md transition-colors"><i class="fa-regular fa-file-lines"></i> Reports</a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 hover:bg-[#1f2937] rounded-md transition-colors"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </div>
+
+        <div class="px-4 mt-8 flex-1 w-64">
+            <p class="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wider">Patients</p>
+            <div class="relative mb-4">
+                <i class="fa-solid fa-search absolute left-3 top-2.5 text-gray-500 text-sm"></i>
+                <input type="text" placeholder="Search patients..." class="w-full bg-[#1f2937] text-sm rounded-md py-2 pl-9 pr-3 focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder-gray-500">
+            </div>
+            
+            <div class="space-y-3">
+                <a href="patient.html" class="flex items-center justify-between p-2 hover:bg-[#1f2937] rounded-md cursor-pointer border-r-2 border-transparent hover:border-red-500 block">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-pink-100 text-pink-700 font-bold rounded-full h-8 w-8 flex items-center justify-center text-xs">JD</div>
+                        <div>
+                            <p class="text-sm text-white font-medium">John Doe</p>
+                            <p class="text-xs text-gray-500">54y · Ward A</p>
+                        </div>
+                    </div>
+                    <div class="h-2 w-2 rounded-full bg-red-500"></div>
+                </a>
+                <div class="flex items-center justify-between p-2 hover:bg-[#1f2937] rounded-md cursor-pointer border-r-2 border-transparent hover:border-green-500 block">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-blue-100 text-blue-700 font-bold rounded-full h-8 w-8 flex items-center justify-center text-xs">SW</div>
+                        <div>
+                            <p class="text-sm text-white font-medium">Sania Wong</p>
+                            <p class="text-xs text-gray-500">38y · Ward B</p>
+                        </div>
+                    </div>
+                    <div class="h-2 w-2 rounded-full bg-green-500"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 mt-auto border-t border-gray-800 flex items-center gap-3 w-64">
+            <div class="bg-blue-500 text-white font-bold rounded-full h-10 w-10 flex items-center justify-center text-sm">ON</div>
+            <div>
+                <p class="text-sm text-white font-bold">Dr. Omekwu N.</p>
+                <p class="text-xs text-gray-400">Attending physician</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto w-full relative">
+        
+        <header class="flex items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-6 gap-4">
+            <button id="toggleBtn" class="text-gray-500 hover:text-blue-500 focus:outline-none transition-colors p-2 bg-gray-50 rounded-md md:hidden">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <h2 class="text-xl font-bold text-gray-800">Main Dashboard</h2>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-gray-500 text-sm mb-1"><i class="fa-solid fa-users mr-2"></i>Total Patients</p>
+                <h2 id="stat-total-patients" class="text-3xl font-bold">--</h2>
+                <p class="text-green-500 text-xs mt-2"><i class="fa-solid fa-arrow-trend-up"></i> +13% vs last week</p>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-gray-500 text-sm mb-1"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Critical Alerts</p>
+                <h2 id="stat-critical-alerts" class="text-3xl font-bold">--</h2>
+                <p class="text-green-500 text-xs mt-2"><i class="fa-solid fa-arrow-trend-up"></i> +13% vs last week</p>
+            </div>
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-gray-500 text-sm mb-1"><i class="fa-solid fa-tower-broadcast mr-2"></i>Devices Offline</p>
+                <h2 id="stat-offline-devices" class="text-3xl font-bold">--</h2>
+                <p class="text-red-500 text-xs mt-2"><i class="fa-solid fa-arrow-trend-down"></i> -24% vs last week</p>
+            </div>
+             <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-gray-500 text-sm mb-1"><i class="fa-regular fa-clock mr-2"></i>New Alert</p>
+                <h2 id="stat-new-alerts" class="text-3xl font-bold">--</h2>
+                <p class="text-red-500 text-xs mt-2"><i class="fa-solid fa-arrow-trend-down"></i> -5% vs last week</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="col-span-1 lg:col-span-2 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-gray-800">Device Status</h3>
+                    <select class="text-sm border-gray-200 rounded-md text-gray-500"><option>Feb 2026</option></select>
+                </div>
+                <div class="h-64">
+                    <canvas id="deviceStatusChart"></canvas>
+                </div>
+            </div>
+
+            <div class="col-span-1 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="font-bold text-gray-800 mb-4">Report & Insights</h3>
+                <div class="h-64">
+                    <canvas id="reportsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.remove('w-64', 'md:w-64');
+            sidebar.classList.add('w-0');
+        });
+
+        toggleBtn.addEventListener('click', () => {
+            if (sidebar.classList.contains('w-0')) {
+                sidebar.classList.remove('w-0', 'md:w-64');
+                sidebar.classList.add('w-64');
+            } else {
+                sidebar.classList.remove('w-64', 'md:w-64');
+                sidebar.classList.add('w-0');
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.add('md:w-64');
+                sidebar.classList.remove('w-0', 'w-64');
+            } else {
+                sidebar.classList.remove('md:w-64', 'w-64');
+                sidebar.classList.add('w-0');
+            }
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const ctxDevice = document.getElementById('deviceStatusChart').getContext('2d');
+        const deviceChart = new Chart(ctxDevice, {
+            type: 'bar',
+            data: {
+                labels: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                datasets: [
+                    { label: 'Online', data: [60, 80, 75, 90, 65, 80, 70], backgroundColor: '#10b981', borderRadius: 20 },
+                    { label: 'Offline', data: [20, 30, 25, 40, 20, 35, 25], backgroundColor: '#ef4444', borderRadius: 20 },
+                    { label: 'Battery Low', data: [10, 15, 10, 20, 15, 10, 15], backgroundColor: '#3b82f6', borderRadius: 20 }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true, grid: {display: false} }, y: { stacked: true, border: {display: false} } }, plugins: { legend: { position: 'right' } } }
+        });
+
+        const ctxReports = document.getElementById('reportsChart').getContext('2d');
+        const reportsChart = new Chart(ctxReports, {
+            type: 'bar',
+            data: {
+                labels: ['Stable', 'At Risk', 'Critical'],
+                datasets: [{ label: 'Patient Status', data: [52, 38, 20], backgroundColor: ['#10b981', '#f59e0b', '#ef4444'], borderRadius: 4 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+
+        const statsRef = ref(db, 'dashboard/stats');
+        onValue(statsRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                document.getElementById('stat-total-patients').innerText = data.totalPatients !== undefined ? data.totalPatients : '--';
+                document.getElementById('stat-critical-alerts').innerText = data.criticalAlerts !== undefined ? data.criticalAlerts : '--';
+                document.getElementById('stat-offline-devices').innerText = data.offlineDevices !== undefined ? data.offlineDevices : '--';
+                document.getElementById('stat-new-alerts').innerText = data.newAlerts !== undefined ? data.newAlerts : '--';
+            }
+        });
+
+        const chartsRef = ref(db, 'dashboard/charts');
+        onValue(chartsRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                if (data.reports) {
+                    reportsChart.data.datasets[0].data = [data.reports.stable || 0, data.reports.atRisk || 0, data.reports.critical || 0];
+                    reportsChart.update();
+                }
+                if (data.deviceStatus) {
+                    if (data.deviceStatus.online) deviceChart.data.datasets[0].data = data.deviceStatus.online;
+                    if (data.deviceStatus.offline) deviceChart.data.datasets[1].data = data.deviceStatus.offline;
+                    if (data.deviceStatus.batteryLow) deviceChart.data.datasets[2].data = data.deviceStatus.batteryLow;
+                    deviceChart.update();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

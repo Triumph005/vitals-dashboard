@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe Vitals - VitalsNet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 flex h-screen font-sans overflow-hidden">
+
+    <aside id="sidebar" class="bg-[#111827] text-gray-300 flex flex-col h-full overflow-x-hidden overflow-y-auto shrink-0 transition-all duration-300 z-50 absolute md:relative w-0 md:w-64">
+        
+        <div class="flex items-center justify-between p-6 w-64">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-500 text-white p-2 rounded-md"><i class="fa-solid fa-plus"></i></div>
+                <div>
+                    <h1 class="text-white font-bold text-lg leading-tight">VitalsNet</h1>
+                    <p class="text-xs text-gray-400">2G IoT Monitor</p>
+                </div>
+            </div>
+            <button id="closeSidebarBtn" class="md:hidden text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="px-4 mb-6 w-64">
+            <p class="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wider">Navigation</p>
+            <nav class="space-y-1">
+                <a href="index.html" class="flex items-center gap-3 px-3 py-2 hover:bg-[#1f2937] rounded-md transition-colors"><i class="fa-solid fa-border-all"></i> Dashboard</a>
+                <a href="#" class="flex items-center justify-between px-3 py-2 hover:bg-[#1f2937] rounded-md transition-colors">
+                    <div class="flex items-center gap-3"><i class="fa-regular fa-bell"></i> Alerts</div>
+                    <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 hover:bg-[#1f2937] rounded-md transition-colors"><i class="fa-regular fa-file-lines"></i> Reports</a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 hover:bg-[#1f2937] rounded-md transition-colors"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </div>
+
+        <div class="px-4 flex-1 w-64">
+            <p class="text-xs text-gray-500 font-semibold mb-2 uppercase tracking-wider">Patients</p>
+            <div class="relative mb-4">
+                <i class="fa-solid fa-search absolute left-3 top-2.5 text-gray-500 text-sm"></i>
+                <input type="text" placeholder="Search patients..." class="w-full bg-[#1f2937] text-sm rounded-md py-2 pl-9 pr-3 focus:outline-none focus:ring-1 focus:ring-blue-500 placeholder-gray-500">
+            </div>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between p-2 bg-[#1f2937] border-l-2 border-white rounded-r-md cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-pink-100 text-pink-700 font-bold rounded-full h-8 w-8 flex items-center justify-center text-xs">JD</div>
+                        <div>
+                            <p class="text-sm text-white font-medium">John Doe</p>
+                            <p class="text-xs text-gray-400">54y · Ward A</p>
+                        </div>
+                    </div>
+                    <div class="h-2 w-2 rounded-full bg-red-500"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 mt-auto border-t border-gray-800 flex items-center gap-3 w-64">
+            <div class="bg-blue-500 text-white font-bold rounded-full h-10 w-10 flex items-center justify-center text-sm">ON</div>
+            <div>
+                <p class="text-sm text-white font-bold">Dr. Omekwu N.</p>
+                <p class="text-xs text-gray-400">Attending physician</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto flex flex-col gap-6 w-full relative">
+        
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-4 rounded-xl shadow-sm border border-gray-200 gap-4 md:gap-0">
+            <div class="flex items-center gap-4">
+                <button id="toggleBtn" class="text-gray-500 hover:text-blue-500 focus:outline-none transition-colors p-2 bg-gray-50 rounded-md md:hidden">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">John Doe Vitals</h2>
+                    <p class="text-sm text-gray-500">Landmark University PHC · 01:25:03 PM</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 self-end md:self-auto">
+                <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-2">
+                    <span class="h-2 w-2 bg-green-500 rounded-full block"></span> 2G online
+                </span>
+                <span class="text-gray-500 text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-signal text-green-500"></i> Packets: 31
+                </span>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-green-400 relative overflow-hidden flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="text-gray-500 text-sm font-medium flex items-center gap-2"><i class="fa-regular fa-heart text-blue-500"></i> Heart rate</p>
+                        <span class="h-2 w-2 bg-green-500 rounded-full block"></span>
+                    </div>
+                    <div class="flex items-baseline gap-2"><h2 id="current-hr" class="text-5xl font-bold text-gray-800">--</h2></div>
+                    <p class="text-gray-400 text-xs">beats per minute</p>
+                    <p class="text-gray-400 text-xs mt-1">Normal: 60-100 bpm</p>
+                </div>
+                <div class="h-16 mt-4 w-full"><canvas id="hrMiniChart"></canvas></div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-green-400 relative overflow-hidden flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="text-gray-500 text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-droplet text-teal-500"></i> SpO₂</p>
+                        <span class="h-2 w-2 bg-green-500 rounded-full block"></span>
+                    </div>
+                    <div class="flex items-baseline gap-2"><h2 id="current-spo2" class="text-5xl font-bold text-gray-800">--</h2></div>
+                    <p class="text-gray-400 text-xs">% oxygen saturation</p>
+                    <p class="text-gray-400 text-xs mt-1">Normal: ≥ 95%</p>
+                </div>
+                <div class="h-16 mt-4 w-full"><canvas id="spo2MiniChart"></canvas></div>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-green-400 relative overflow-hidden flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="text-gray-500 text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-thermometer-half text-orange-400"></i> Temperature</p>
+                        <span class="h-2 w-2 bg-green-500 rounded-full block"></span>
+                    </div>
+                    <div class="flex items-baseline gap-2"><h2 id="current-temp" class="text-5xl font-bold text-gray-800">--</h2></div>
+                    <p class="text-gray-400 text-xs">degrees celsius</p>
+                    <p class="text-gray-400 text-xs mt-1">Normal: 36.1-37.2°C</p>
+                </div>
+                <div class="h-16 mt-4 w-full"><canvas id="tempMiniChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-[300px]">
+            <div class="col-span-1 lg:col-span-2 bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex flex-col">
+                <h3 class="font-bold text-gray-800 mb-4">60-minute trend</h3>
+                <div class="flex-1 min-h-[200px] relative"><canvas id="trendChart"></canvas></div>
+                <div class="flex gap-6 mt-4 text-sm font-medium text-gray-600">
+                    <div class="flex items-center gap-2"><span class="w-4 border-t-2 border-blue-500"></span> HR (bpm)</div>
+                    <div class="flex items-center gap-2"><span class="w-4 border-t-2 border-teal-500 border-dashed"></span> SpO₂ (%)</div>
+                </div>
+            </div>
+
+            <div class="col-span-1 flex flex-col gap-6">
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex-1">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-gray-800">Active alerts</h3>
+                        <span class="bg-red-50 text-red-500 text-xs px-2 py-1 rounded-md font-semibold border border-red-100">0 alerts</span>
+                    </div>
+                    <div class="flex items-center justify-center h-24 text-gray-400 text-sm">No active alerts</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-800 mb-4 text-sm text-gray-400 uppercase tracking-wider">Network telemetry</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-500">Last packet</span><span class="font-medium text-gray-800">01:25:03 PM</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Delivery rate</span><span class="font-medium text-gray-800">98.4%</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Network</span><span class="font-medium text-blue-500">GPRS / 2G</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.remove('w-64', 'md:w-64');
+            sidebar.classList.add('w-0');
+        });
+
+        toggleBtn.addEventListener('click', () => {
+            if (sidebar.classList.contains('w-0')) {
+                sidebar.classList.remove('w-0', 'md:w-64');
+                sidebar.classList.add('w-64');
+            } else {
+                sidebar.classList.remove('w-64', 'md:w-64');
+                sidebar.classList.add('w-0');
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.add('md:w-64');
+                sidebar.classList.remove('w-0', 'w-64');
+            } else {
+                sidebar.classList.remove('md:w-64', 'w-64');
+                sidebar.classList.add('w-0');
+            }
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const miniChartOptions = {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { enabled: false } },
+            scales: { x: { display: false }, y: { display: false } },
+            elements: { point: { radius: 0 }, line: { tension: 0.4, borderWidth: 2 } },
+            layout: { padding: 0 }
+        };
+
+        const hrChart = new Chart(document.getElementById('hrMiniChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: ['','','','','','','','','',''], datasets: [{ data: [76, 78, 77, 75, 76, 78, 79, 77, 76, 77], borderColor: '#3b82f6' }] },
+            options: miniChartOptions
+        });
+
+        const spo2Chart = new Chart(document.getElementById('spo2MiniChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: ['','','','','','','','','',''], datasets: [{ data: [98, 98, 98, 99, 98, 96, 95, 97, 98, 98], borderColor: '#14b8a6', borderDash: [5, 5] }] },
+            options: miniChartOptions
+        });
+
+        const tempChart = new Chart(document.getElementById('tempMiniChart').getContext('2d'), {
+            type: 'line',
+            data: { labels: ['','','','','','','','','',''], datasets: [{ data: [36.7, 36.8, 36.8, 36.9, 37.0, 36.9, 36.8, 36.8, 36.7, 36.8], borderColor: '#d97706' }] },
+            options: miniChartOptions
+        });
+
+        const trendChart = new Chart(document.getElementById('trendChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['','','','','',''],
+                datasets: [
+                    { label: 'HR', data: [75, 78, 76, 79, 77, 77], borderColor: '#3b82f6', tension: 0.4, borderWidth: 2, pointRadius: 0 },
+                    { label: 'SpO2', data: [98, 99, 97, 98, 99, 98], borderColor: '#14b8a6', tension: 0.4, borderWidth: 2, borderDash: [5, 5], pointRadius: 0 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                scales: { x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } }, y: { display: false, min: 60, max: 110 } }
+            }
+        });
+
+        function updateMiniChart(chart, newValue) {
+            chart.data.datasets[0].data.push(newValue);
+            chart.data.datasets[0].data.shift();
+            chart.update();
+        }
+
+        const vitalsRef = ref(db, 'patients/JohnDoe/vitals/current');
+
+        onValue(vitalsRef, (snapshot) => {
+            const data = snapshot.val();
+            
+            if (data) {
+                document.getElementById('current-hr').innerText = data.heartRate || '--';
+                document.getElementById('current-spo2').innerText = data.spo2 || '--';
+                document.getElementById('current-temp').innerText = data.temperature || '--';
+                
+                if (data.heartRate) updateMiniChart(hrChart, data.heartRate);
+                if (data.spo2) updateMiniChart(spo2Chart, data.spo2);
+                if (data.temperature) updateMiniChart(tempChart, data.temperature);
+
+                if (data.heartRate && data.spo2) {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+                    trendChart.data.labels.push(timeString);
+                    trendChart.data.labels.shift();
+                    
+                    trendChart.data.datasets[0].data.push(data.heartRate);
+                    trendChart.data.datasets[0].data.shift();
+                    
+                    trendChart.data.datasets[1].data.push(data.spo2);
+                    trendChart.data.datasets[1].data.shift();
+                    
+                    trendChart.update();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
