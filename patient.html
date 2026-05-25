@@ -196,14 +196,15 @@
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+        apiKey: "AIzaSyAjVEB1yy8TM38Jv0hKexAAdlunQhtFXMk",
+        authDomain: "remote-vitals-monitor.firebaseapp.com",
+        databaseURL: "https://remote-vitals-monitor-default-rtdb.firebaseio.com",
+        projectId: "remote-vitals-monitor",
+        storageBucket: "remote-vitals-monitor.firebasestorage.app",
+        messagingSenderId: "1031224404364",
+        appId: "1:1031224404364:web:3ca3724388095d78b08ea9",
+        measurementId: "G-2PDZKBE3BY"
+        };      
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
